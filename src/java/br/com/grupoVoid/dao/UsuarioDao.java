@@ -114,7 +114,7 @@ public class UsuarioDao {
             stm = con.prepareStatement(sql);
             stm.setInt(1, id);
             rs = stm.executeQuery();
-            
+
             if (rs.next()) {
                 user.setId(rs.getInt("id"));
                 user.setNome(rs.getString("nome"));
@@ -133,4 +133,21 @@ public class UsuarioDao {
     }
 
     /*------------------------------------------------------------*/
+    public void deletarUsuario(int id) throws SQLException {
+        String sql = "DELETE FROM usuario WHERE id = ?";
+
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, id);
+
+            stm.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("Deu erro em excluir do banco." + e);
+        } finally {
+            ConnectionFactory.fecharConexao(con, stm);
+        }
+    }
 }

@@ -10,7 +10,7 @@ import java.sql.SQLException;
  * @author maryucha
  */
 public class ControleUsuario {
-    
+
     static final Gson GSON = new Gson();
 
     /*----------------------------------------------*/
@@ -29,8 +29,8 @@ public class ControleUsuario {
     /*----------------------------------------------*/
     static public String pegarUsuario(int id) throws SQLException {
         UsuarioDao dao = new UsuarioDao();
-        Usuario user = dao.buscarUsuario(id);    
-        
+        Usuario user = dao.buscarUsuario(id);
+
         return GSON.toJson(user);
     }
 
@@ -39,8 +39,12 @@ public class ControleUsuario {
         pegarUsuario(id);
         Usuario user = GSON.fromJson(body, Usuario.class);
         UsuarioDao dao = new UsuarioDao();
-        dao.atualizarUsuario(id,user);
+        dao.atualizarUsuario(id, user);
     }
 
     /*----------------------------------------------*/
+    static public void deletarUsuario(int id) throws SQLException {
+        UsuarioDao dao = new UsuarioDao();
+        dao.deletarUsuario(id);
+    }
 }

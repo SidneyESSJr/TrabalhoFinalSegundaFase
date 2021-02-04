@@ -6,6 +6,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -36,11 +37,11 @@ public class UsuarioServices {
         return ControleUsuario.pegarLista();
 
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public String buscarPeloId(@PathParam("id") int id) throws SQLException{
+    public String buscarPeloId(@PathParam("id") int id) throws SQLException {
         return ControleUsuario.pegarUsuario(id);
     }
 
@@ -59,6 +60,14 @@ public class UsuarioServices {
 
         ControleUsuario.atualizarUsuario(id, content);
         return content;
+    }
+
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+    public void deletarUsuario(@PathParam("id") int id) throws SQLException {
+        ControleUsuario.deletarUsuario(id);
+
     }
 
 }
