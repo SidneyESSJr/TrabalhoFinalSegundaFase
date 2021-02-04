@@ -15,16 +15,15 @@ import java.util.List;
  */
 public class UsuarioDao {
 
-    private Connection con = null;
+    private final Connection con = ConnectionFactory.getConnection();
 
     /*------------------------------------------------------------*/
-    public UsuarioDao() {
-        con = ConnectionFactory.getConnection();
+    public UsuarioDao(){
+        
     }
 
     /*------------------------------------------------------------*/
     public boolean salvar(Usuario usuario) throws SQLException {
-        con = ConnectionFactory.getConnection();
 
         String sql = "insert into usuario (nome,cpf,idade,endereco,telefone,ativo) values(?,?,?,?,?,?)";
         PreparedStatement stm = null;
