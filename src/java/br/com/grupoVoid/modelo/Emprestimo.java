@@ -9,11 +9,11 @@ import br.com.grupoVoid.util.SituacaoEmprestimo;
  * @author maryucha
  */
 public class Emprestimo {
-    
+
     private Integer id;
     private Usuario usuario;
     private Livro livro;
-    private LocalDate dataInicio ;
+    private LocalDate dataInicio;
     private LocalDate dataEntrega;
     private double multa;
     private SituacaoEmprestimo situacao;
@@ -73,7 +73,6 @@ public class Emprestimo {
     public void setLivro(Livro livro) {
         this.livro = livro;
     }
-    
 
     @Override
     public int hashCode() {
@@ -99,8 +98,5 @@ public class Emprestimo {
         }
         return true;
     }
-    
-    
-    
-    
+
 }
