@@ -20,7 +20,7 @@ import javax.ws.rs.core.MediaType;
  * @author maryucha
  */
 @Path("/user")
-public class UsuarioServices {
+public class ServicoUsuario {
 
     @Context
     private UriInfo context;
@@ -28,7 +28,7 @@ public class UsuarioServices {
     /**
      * Creates a new instance of UsuarioServices
      */
-    public UsuarioServices() {
+    public ServicoUsuario() {
     }
 
     @GET
@@ -54,8 +54,9 @@ public class UsuarioServices {
     }
 
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public String editarUsuarioPeloId(@PathParam("id") int id, String content) throws SQLException {
 
         ControleUsuario.atualizarUsuario(id, content);

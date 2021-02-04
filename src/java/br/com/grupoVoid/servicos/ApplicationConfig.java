@@ -18,7 +18,8 @@ public class ApplicationConfig extends Application {
     }
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(br.com.grupoVoid.servicos.UsuarioServices.class);
+        resources.add(br.com.grupoVoid.servicos.ServicoLivro.class);
+        resources.add(br.com.grupoVoid.servicos.ServicoUsuario.class);
     }
     
 }

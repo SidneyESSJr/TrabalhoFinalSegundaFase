@@ -82,7 +82,6 @@ public class UsuarioDao {
         String sql = "update usuario set nome = ?, cpf =?, idade=?, endereco =?, telefone = ?, ativo = ? where id = ?";
 
         PreparedStatement stm = null;
-        ResultSet rs = null;
 
         try {
             stm = con.prepareStatement(sql);
@@ -99,7 +98,7 @@ public class UsuarioDao {
         } catch (SQLException e) {
             System.err.println("DEU PAU EM PEGAR DO BANCO." + e);
         } finally {
-            ConnectionFactory.fecharConexao(con, stm, rs);
+            ConnectionFactory.fecharConexao(con, stm);
         }
     }
 
@@ -137,7 +136,7 @@ public class UsuarioDao {
         String sql = "DELETE FROM usuario WHERE id = ?";
 
         PreparedStatement stm = null;
-        ResultSet rs = null;
+        
         try {
             stm = con.prepareStatement(sql);
             stm.setInt(1, id);

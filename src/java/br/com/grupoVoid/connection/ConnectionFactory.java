@@ -16,7 +16,7 @@ public class ConnectionFactory {
     private static final String URL = "jdbc:postgresql://localhost:5432/db_biblioteca";
 
     private static final String USER = "postgres";
-    private static final String PASS = "191007";
+    private static final String PASS = "root"; //191007 - root
 
     public static Connection getConnection() {
 

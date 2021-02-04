@@ -2,7 +2,6 @@ package br.com.grupoVoid.modelo;
 
 import java.util.Objects;
 
-
 /**
  *
  * @author maryucha
