@@ -18,7 +18,7 @@ public class UsuarioDao {
     private Connection con = null;
 
     /*------------------------------------------------------------*/
-    public UsuarioDao() throws SQLException {
+    public UsuarioDao() {
         con = ConnectionFactory.getConnection();
     }
 
