@@ -3,19 +3,20 @@ package br.com.grupoVoid.modelo;
 import java.time.LocalDate;
 import java.util.Objects;
 import br.com.grupoVoid.util.SituacaoEmprestimo;
+import javax.persistence.Enumerated;
 
 /**
  *
  * @author maryucha
  */
 public class Emprestimo {
-    
+
     private Integer id;
     private Usuario usuario;
-    private LocalDate dataInicio ;
+    private LocalDate dataInicio;
     private LocalDate dataEntrega;
     private double multa;
-    private SituacaoEmprestimo situacao;
+    private Boolean situacao;
 
     public Integer getId() {
         return id;
@@ -57,11 +58,11 @@ public class Emprestimo {
         this.multa = multa;
     }
 
-    public SituacaoEmprestimo getSituacao() {
+    public Boolean isSituacao() {
         return situacao;
     }
 
-    public void setSituacao(SituacaoEmprestimo situacao) {
+    public void setSituacao(Boolean situacao) {
         this.situacao = situacao;
     }
 
@@ -84,13 +85,7 @@ public class Emprestimo {
             return false;
         }
         final Emprestimo other = (Emprestimo) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
-    
-    
-    
-    
+
 }

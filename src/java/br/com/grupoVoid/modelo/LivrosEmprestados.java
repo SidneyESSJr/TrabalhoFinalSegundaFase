@@ -1,6 +1,5 @@
 package br.com.grupoVoid.modelo;
 
-import br.com.grupoVoid.modelo.*;
 import java.util.Objects;
 
 /**
@@ -64,12 +63,7 @@ public class LivrosEmprestados {
             return false;
         }
         final LivrosEmprestados other = (LivrosEmprestados) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
-    
-    
 
 }
