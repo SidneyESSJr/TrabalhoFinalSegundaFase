@@ -2,7 +2,6 @@ package br.com.grupoVoid.modelo;
 
 import java.time.LocalDate;
 import java.util.Objects;
-import br.com.grupoVoid.util.SituacaoEmprestimo;
 
 /**
  *
@@ -16,7 +15,7 @@ public class Emprestimo {
     private LocalDate dataInicio;
     private LocalDate dataEntrega;
     private double multa;
-    private SituacaoEmprestimo situacao;
+    private boolean situacao;
 
     public Integer getId() {
         return id;
@@ -58,14 +57,14 @@ public class Emprestimo {
         this.multa = multa;
     }
 
-    public SituacaoEmprestimo getSituacao() {
+     public boolean isSituacao() {
         return situacao;
     }
 
-    public void setSituacao(SituacaoEmprestimo situacao) {
+    public void setSituacao(boolean situacao) {
         this.situacao = situacao;
     }
-
+    
     public Livro getLivro() {
         return livro;
     }
