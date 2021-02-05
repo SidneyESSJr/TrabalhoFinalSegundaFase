@@ -17,6 +17,8 @@ public class Emprestimo {
     private double multa;
     private boolean situacao;
 
+
+
     public Integer getId() {
         return id;
     }
@@ -57,11 +59,19 @@ public class Emprestimo {
         this.multa = multa;
     }
 
+<<<<<<< HEAD
      public boolean isSituacao() {
+=======
+    public Boolean isSituacao() {
+>>>>>>> origin/main
         return situacao;
     }
 
+<<<<<<< HEAD
     public void setSituacao(boolean situacao) {
+=======
+    public void setSituacao(Boolean situacao) {
+>>>>>>> origin/main
         this.situacao = situacao;
     }
     
