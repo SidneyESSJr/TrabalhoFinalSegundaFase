@@ -53,7 +53,8 @@ public class EmprestimoDao {
                 emprestimo.setSituacao(rs.getBoolean("situacao"));
                 int usuario = rs.getInt("usuario");
                 emprestimo.setUsuario(uDao.buscarUsuario(usuario));
-                
+                int livro = rs.getInt("livro");
+                emprestimo.setLivro(lDao.pegarLivro(livro));
             }
         } catch (SQLException e) {
             System.err.println("DEU PAU EM PEGAR DO BANCO." + e);
