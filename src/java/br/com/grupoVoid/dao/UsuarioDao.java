@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class UsuarioDao {
 
-    private Connection con = ConnectionFactory.getConnection();
+    private final Connection con = ConnectionFactory.getConnection();
 
     /*------------------------------------------------------------*/
     public UsuarioDao(){
