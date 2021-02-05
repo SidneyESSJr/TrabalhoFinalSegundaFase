@@ -21,27 +21,31 @@ import javax.ws.rs.core.UriInfo;
 @Path("/livro")
 public class ServicoLivro {
 
+    private ControleLivro controleLivro = new ControleLivro();
+    
     @Context
     private UriInfo context;
+    
+    
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String listarTodos() throws SQLException {
-        return ControleLivro.pegarLista();
+        return controleLivro.pegarLista();
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public String buscarPeloId(@PathParam("id") int id) throws SQLException {
-        return ControleLivro.pegarLivro(id);
+        return controleLivro.pegarLivro(id);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String addNovoLivro(String body) throws SQLException {
-        ControleLivro.addNovoLivro(body);
+        controleLivro.addNovoLivro(body);
         return body;
     }
 
@@ -50,7 +54,7 @@ public class ServicoLivro {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public String editarLivroPeloId(@PathParam("id") int id, String content) throws SQLException {
-        ControleLivro.atualizarLivro(id, content);
+        controleLivro.atualizarLivro(id, content);
         return content;
     }
 
@@ -58,6 +62,6 @@ public class ServicoLivro {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void deletarLivro(@PathParam("id") int id) throws SQLException {
-        ControleLivro.deletarLivro(id);
+        controleLivro.deletarLivro(id);
     }
 }
