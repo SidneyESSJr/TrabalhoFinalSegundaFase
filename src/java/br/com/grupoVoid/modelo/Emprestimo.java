@@ -3,7 +3,6 @@ package br.com.grupoVoid.modelo;
 import java.time.LocalDate;
 import java.util.Objects;
 import br.com.grupoVoid.util.SituacaoEmprestimo;
-import javax.persistence.Enumerated;
 
 /**
  *
@@ -13,6 +12,7 @@ public class Emprestimo {
 
     private Integer id;
     private Usuario usuario;
+    private Livro livro;
     private LocalDate dataInicio;
     private LocalDate dataEntrega;
     private double multa;
@@ -66,6 +66,14 @@ public class Emprestimo {
         this.situacao = situacao;
     }
 
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -85,7 +93,10 @@ public class Emprestimo {
             return false;
         }
         final Emprestimo other = (Emprestimo) obj;
-        return Objects.equals(this.id, other.id);
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
 }

@@ -4,6 +4,7 @@ package br.com.grupoVoid.controle;
 import br.com.grupoVoid.dao.EmprestimoDao;
 import br.com.grupoVoid.modelo.Emprestimo;
 import com.google.gson.Gson;
+import java.sql.SQLException;
 
 /**
  *
@@ -14,7 +15,7 @@ public class ControleEmprestimo {
     private static final Gson GSON = new Gson();
     private final static EmprestimoDao DAO = new EmprestimoDao();
 
-    public static String pegarLista() {
+    public static String pegarLista() throws SQLException {
         return GSON.toJson(DAO.buscarTodos());
     }
 

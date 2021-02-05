@@ -24,8 +24,7 @@ public class LivroDao {
 
     /*------------------------------------------------------------*/
     public boolean salvar(Livro livro) throws SQLException {
-        con = ConnectionFactory.getConnection();
-
+       
         String sql = "insert into livro (qtdlivro,nome,genero,resumo,anopubli,edicao, disponibilidade) values(?,?,?,?,?,?,?)";
         PreparedStatement stm = null;
         try {
@@ -47,6 +46,7 @@ public class LivroDao {
         }
     }
 
+    /*------------------------------------------------------------*/
     public List<Livro> buscarTodos() throws SQLException {
 
         String sql = "select * from livro";
@@ -80,6 +80,7 @@ public class LivroDao {
         return list;
     }
 
+    /*------------------------------------------------------------*/
     public Livro pegarLivro(int id) throws SQLException {
         String sql = "select * from livro where id = ?";
         PreparedStatement stm = null;
@@ -110,6 +111,7 @@ public class LivroDao {
         return livro;
     }
 
+    /*------------------------------------------------------------*/
     public void atualizarLivro(int id, Livro livro) throws SQLException {
         String sql = "update livro set qtdlivro = ?, nome =?, genero =?, resumo =?, anopubli= ?, edicao= ?, disponibilidade = ? where id = ?";
 
@@ -134,14 +136,15 @@ public class LivroDao {
         }
     }
 
+    /*------------------------------------------------------------*/
     public void deletarLivro(int id) throws SQLException {
         String sql = "DELETE FROM livro WHERE id = ?";
 
         PreparedStatement stm = null;
-        
+
         try {
             stm = con.prepareStatement(sql);
-            
+
             stm.setInt(1, id);
             stm.executeUpdate();
 
@@ -151,4 +154,6 @@ public class LivroDao {
             ConnectionFactory.fecharConexao(con, stm);
         }
     }
+
+    /*------------------------------------------------------------*/
 }
