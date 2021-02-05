@@ -1,6 +1,7 @@
 package br.com.grupoVoid.servicos;
 
 import br.com.grupoVoid.controle.ControleEmprestimo;
+import java.sql.SQLException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -25,7 +26,7 @@ public class ServicoEmprestimo {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String listarTodos() {
+    public String listarTodos() throws SQLException {
         return ControleEmprestimo.pegarLista();
     }
     
