@@ -1,6 +1,7 @@
 package br.com.grupoVoid.modelo;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
@@ -16,8 +17,7 @@ public class Emprestimo {
     private LocalDate dataEntrega;
     private double multa;
     private boolean situacao;
-
-
+    private static final DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public Integer getId() {
         return id;
@@ -35,20 +35,20 @@ public class Emprestimo {
         this.usuario = usuario;
     }
 
-    public LocalDate getDataInicio() {
-        return dataInicio;
+    public String getDataInicio() {
+        return dataInicio.format(df);
     }
 
     public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public LocalDate getDataEntrega() {
-        return dataEntrega;
+    public String getDataEntrega() {
+        return dataEntrega.format(df);
     }
 
     public void setDataEntrega(LocalDate dataEntrega) {
-        this.dataEntrega = dataEntrega;
+        this.dataEntrega = dataEntrega.format(df);
     }
 
     public double getMulta() {
@@ -68,7 +68,7 @@ public class Emprestimo {
 
         this.situacao = situacao;
     }
-    
+
     public Livro getLivro() {
         return livro;
     }

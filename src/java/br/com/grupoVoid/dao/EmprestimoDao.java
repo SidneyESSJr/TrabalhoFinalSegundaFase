@@ -7,7 +7,6 @@ package br.com.grupoVoid.dao;
 
 import br.com.grupoVoid.connection.ConnectionFactory;
 import br.com.grupoVoid.modelo.Emprestimo;
-import br.com.grupoVoid.modelo.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,6 +23,7 @@ public class EmprestimoDao {
     private Connection con = null;
     private final UsuarioDao uDao = new UsuarioDao();
     private final LivroDao lDao = new LivroDao();
+
 
     /*------------------------------------------------------------*/
     public EmprestimoDao() {
@@ -57,24 +57,44 @@ public class EmprestimoDao {
         } catch (SQLException e) {
             System.err.println("DEU PAU EM PEGAR DO BANCO." + e);
         } finally {
-            ConnectionFactory.fecharConexao(con, stm,rs);
+            ConnectionFactory.fecharConexao(con, stm, rs);
         }
         return list;
     }
 
+    /*------------------------------------------------------------*/
     public Object pegarEmprestimo(int id) {
         return null;
     }
 
-    public void adicionarNovo(Emprestimo fromJson) {
+    /*------------------------------------------------------------*/
+    public Boolean adicionarNovo(Emprestimo emprestimo) {
+        String sql = "insert into emprestimo(id_usuario,id_livro,data_inicio,data_entrega,multa,situacao) values(?,?,?,?,?,?)";
+
+        PreparedStatement stm = null;
+
+        try {
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, emprestimo.getUsuario().getId());
+            stm.setInt(2, emprestimo.getLivro().getId());
+            stm.setDate(3, Date.valueOf(emprestimo.getDataInicio()));
+            stm.setDate(4, Date.valueOf(emprestimo.getDataEntrega()));
+            stm.setDouble(5, emprestimo.getMulta());
+            stm.setBoolean(6, emprestimo.isSituacao());
+            return true;
+        } catch (SQLException e) {
+            System.err.println("erro salvar no banco " + e);
+            return false;
+        }
     }
 
+    /*------------------------------------------------------------*/
     public void atualizarEmprestimo(int id, Emprestimo fromJson) {
     }
 
+    /*------------------------------------------------------------*/
     public void deletarLivro(int id) {
     }
 
-
-
+    /*------------------------------------------------------------*/
 }
