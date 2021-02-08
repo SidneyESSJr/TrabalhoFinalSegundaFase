@@ -36,8 +36,14 @@ public class ControleEmprestimo {
         }
     }
 
-    public void devolverLivro(Integer idLivro) {
-        dao.devolverLivro(idLivro);
+    public void devolverLivro(Integer idEmprestimo) throws SQLException {
+        Emprestimo emprestimo = buscarPeoloId(idEmprestimo);
+        dao.devolverLivro(emprestimo);
+    }
+    
+    public Emprestimo buscarPeoloId(Integer id) throws SQLException{
+        
+        return dao.buscarPeloId(id);
     }
 
 }

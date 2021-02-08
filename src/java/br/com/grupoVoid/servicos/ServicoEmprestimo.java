@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -15,6 +16,8 @@ import javax.ws.rs.core.UriInfo;
 /**
  *
  * @author ssjun
+ * 
+ * 
  */
 @Path("/emprestimo")
 public class ServicoEmprestimo {
@@ -37,11 +40,13 @@ public class ServicoEmprestimo {
         controleEmprestimo.alugarLivro(idLivro, idUsuario, content);
     }
     
-    @POST
-    @Path("/devolver{idLivro}")
+    @PUT
+    @Path("/devolver{idEmprestimo}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void devolverLivro(@PathParam("idLivro") Integer idLivro) {
-        controleEmprestimo.devolverLivro(idLivro);
+    public void devolverLivro(@PathParam("idEmprestimo") Integer idEmprestimo) throws SQLException {
+        controleEmprestimo.devolverLivro(idEmprestimo);
     }
+    
+    
 
 }
