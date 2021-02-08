@@ -8,7 +8,6 @@ package br.com.grupoVoid.dao;
 import br.com.grupoVoid.connection.ConnectionFactory;
 import br.com.grupoVoid.modelo.Emprestimo;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
