@@ -49,7 +49,7 @@ public class EmprestimoDao {
     }
 
     public void devolverLivro(Integer idLivro) {
-
+        
     }
 
     public List<Emprestimo> listarEmprestimos() throws SQLException {
@@ -58,7 +58,7 @@ public class EmprestimoDao {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = conn.prepareStatement("select * from emprestimo");
+            stm = conn.prepareStatement("select * from emprestimo where situacao = true");
             rs = stm.executeQuery();
 
             while (rs.next()) {

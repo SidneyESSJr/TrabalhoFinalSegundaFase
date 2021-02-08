@@ -31,7 +31,7 @@ public class ServicoEmprestimo {
     }
 
     @POST
-    @Path("/alugar/livro{idLivro}/usuario{idUsuario}")
+    @Path("/alugar/{idLivro}/{idUsuario}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void alugarLivro(@PathParam("idLivro") Integer idLivro, @PathParam("idUsuario") Integer idUsuario, String content) {
         controleEmprestimo.alugarLivro(idLivro, idUsuario, content);
