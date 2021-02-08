@@ -24,40 +24,42 @@ public class ServicoEmprestimo {
     @Context
     private UriInfo context;
     
+    private ControleEmprestimo controleEmprestimo = new ControleEmprestimo();
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String listarTodos() throws SQLException {
-        return ControleEmprestimo.pegarLista();
+        return controleEmprestimo.pegarLista();
     }
-    
+
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public String buscarPeloId(@PathParam("id") int id) {
-        return ControleEmprestimo.pegarEmprestimo(id);
+        return controleEmprestimo.pegarEmprestimo(id);
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String addNovoEmprestimo(String content) {
-        ControleEmprestimo.addNovoEmprestimo(content);
+        controleEmprestimo.addNovoEmprestimo(content);
         return content;
     }
-    
+
     @PUT
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public String editarEmprestimoPeloId(@PathParam("id") int id, String content) {
-        ControleEmprestimo.atualizarEmprestimo(id, content);
+        controleEmprestimo.atualizarEmprestimo(id, content);
         return content;
     }
-    
+
     @DELETE
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void deletarEmprestimo(@PathParam("id") int id) {
-        ControleEmprestimo.deletarEmprestimo(id);
+        controleEmprestimo.deletarEmprestimo(id);
     }
 }

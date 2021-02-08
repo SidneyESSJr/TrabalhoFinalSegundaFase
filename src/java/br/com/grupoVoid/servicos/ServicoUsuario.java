@@ -25,16 +25,12 @@ public class ServicoUsuario {
     @Context
     private UriInfo context;
 
-    /**
-     * Creates a new instance of UsuarioServices
-     */
-    public ServicoUsuario() {
-    }
+    private ControleUsuario controleUsuario = new ControleUsuario();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String listarTodos() throws SQLException {
-        return ControleUsuario.pegarLista();
+        return controleUsuario.pegarLista();
 
     }
 
@@ -42,14 +38,14 @@ public class ServicoUsuario {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
     public String buscarPeloId(@PathParam("id") int id) throws SQLException {
-        return ControleUsuario.pegarUsuario(id);
+        return controleUsuario.pegarUsuario(id);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String addNovo(String body) throws SQLException {
-        ControleUsuario.addNovoUsuario(body);
+        controleUsuario.addNovoUsuario(body);
         return body;
     }
 
@@ -59,7 +55,7 @@ public class ServicoUsuario {
     @Consumes(MediaType.APPLICATION_JSON)
     public String editarUsuarioPeloId(@PathParam("id") int id, String content) throws SQLException {
 
-        ControleUsuario.atualizarUsuario(id, content);
+        controleUsuario.atualizarUsuario(id, content);
         return content;
     }
 
@@ -67,7 +63,7 @@ public class ServicoUsuario {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("{id}")
     public void deletarUsuario(@PathParam("id") int id) throws SQLException {
-        ControleUsuario.deletarUsuario(id);
+        controleUsuario.deletarUsuario(id);
 
     }
 

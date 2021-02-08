@@ -15,11 +15,12 @@ import java.util.List;
  */
 public class LivroDao {
 
-    private Connection con = null;
+    private final Connection conn;
 
     /*------------------------------------------------------------*/
-    public LivroDao() {
-        con = ConnectionFactory.getConnection();
+
+    public LivroDao(Connection conn) {
+        this.conn = conn;
     }
 
     /*------------------------------------------------------------*/
@@ -28,7 +29,7 @@ public class LivroDao {
         String sql = "insert into livro (qtdlivro,nome,genero,resumo,anopubli,edicao, disponibilidade) values(?,?,?,?,?,?,?)";
         PreparedStatement stm = null;
         try {
-            stm = con.prepareStatement(sql);
+            stm = conn.prepareStatement(sql);
             stm.setInt(1, livro.getQtdLivro());
             stm.setString(2, livro.getNome());
             stm.setString(3, livro.getGenero());
@@ -42,7 +43,7 @@ public class LivroDao {
             System.err.println("erro salvar no banco " + e);
             return false;
         } finally {
-            ConnectionFactory.fecharConexao(con, stm);
+            ConnectionFactory.fecharConexao(conn, stm);
         }
     }
 
@@ -56,7 +57,7 @@ public class LivroDao {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = con.prepareStatement(sql);
+            stm = conn.prepareStatement(sql);
             rs = stm.executeQuery();
 
             while (rs.next()) {
@@ -75,7 +76,7 @@ public class LivroDao {
         } catch (SQLException e) {
             System.err.println("DEU PAU EM PEGAR DO BANCO." + e);
         } finally {
-            ConnectionFactory.fecharConexao(con, stm, rs);
+            ConnectionFactory.fecharConexao(conn, stm, rs);
         }
         return list;
     }
@@ -89,7 +90,7 @@ public class LivroDao {
         Livro livro = new Livro();
 
         try {
-            stm = con.prepareStatement(sql);
+            stm = conn.prepareStatement(sql);
             stm.setInt(1, id);
             rs = stm.executeQuery();
 
@@ -104,9 +105,9 @@ public class LivroDao {
                 livro.setDisponibilidade(rs.getBoolean("disponibilidade"));
             }
         } catch (SQLException e) {
-            System.err.println("DEU PAU EM PEGAR DO BANCO." + e);
+            System.err.println("DEU PAU EM PEGAR LIVRO DO BANCO." + e);
         } finally {
-            ConnectionFactory.fecharConexao(con, stm, rs);
+            ConnectionFactory.fecharConexao(conn, stm, rs);
         }
         return livro;
     }
@@ -118,7 +119,7 @@ public class LivroDao {
         PreparedStatement stm = null;
 
         try {
-            stm = con.prepareStatement(sql);
+            stm = conn.prepareStatement(sql);
             stm.setInt(1, livro.getQtdLivro());
             stm.setString(2, livro.getNome());
             stm.setString(3, livro.getGenero());
@@ -132,7 +133,7 @@ public class LivroDao {
         } catch (SQLException e) {
             System.err.println("DEU PAU EM PEGAR DO BANCO." + e);
         } finally {
-            ConnectionFactory.fecharConexao(con, stm);
+            ConnectionFactory.fecharConexao(conn, stm);
         }
     }
 
@@ -143,7 +144,7 @@ public class LivroDao {
         PreparedStatement stm = null;
 
         try {
-            stm = con.prepareStatement(sql);
+            stm = conn.prepareStatement(sql);
 
             stm.setInt(1, id);
             stm.executeUpdate();
@@ -151,7 +152,7 @@ public class LivroDao {
         } catch (SQLException e) {
             System.err.println("Deu erro em excluir do banco." + e);
         } finally {
-            ConnectionFactory.fecharConexao(con, stm);
+            ConnectionFactory.fecharConexao(conn, stm);
         }
     }
 

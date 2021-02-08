@@ -16,33 +16,28 @@ public class ConnectionFactory {
     private static final String URL = "jdbc:postgresql://localhost:5432/db_biblioteca";
 
     private static final String USER = "postgres";
-    private static final String PASS = "191007"; //191007 - root
+    private static final String PASS = "root"; //191007 - root
 
     public static Connection getConnection() {
 
         try {
-
             Class.forName(DRIVER);
             System.out.println("conectou");
             return DriverManager.getConnection(URL, USER, PASS);
 
         } catch (SQLException | ClassNotFoundException ex) {
             throw new RuntimeException("Erro na conexão.", ex);
-
         }
-
     }
 
     public static void fecharConexao(Connection con) throws SQLException {
         try {
             if (con != null) {
                 con.close();
-
             }
         } catch (Exception e) {
             System.err.println("Conexão aberta");
         }
-
     }
 
     public static void fecharConexao(Connection con, PreparedStatement stm) throws SQLException {
@@ -54,7 +49,6 @@ public class ConnectionFactory {
         } catch (SQLException e) {
             System.err.println("Conexão aberta");
         }
-
     }
 
     public static void fecharConexao(Connection con, PreparedStatement stm, ResultSet rs) throws SQLException {
@@ -66,6 +60,5 @@ public class ConnectionFactory {
         } catch (SQLException e) {
             System.err.println("Conexão aberta");
         }
-
     }
 }
