@@ -29,37 +29,21 @@ public class ServicoEmprestimo {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String listarTodos() throws SQLException {
-        return controleEmprestimo.pegarLista();
-    }
-
-    @GET
-    @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String buscarPeloId(@PathParam("id") int id) {
-        return controleEmprestimo.pegarEmprestimo(id);
+        return controleEmprestimo.listarEmprestimos();
     }
 
     @POST
+    @Path("/alugar/livro{idLivro}/usuario{idUsuario}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String addNovoEmprestimo(String content) {
-        controleEmprestimo.addNovoEmprestimo(content);
-        return content;
+    public void alugarLivro(@PathParam("idLivro") Integer idLivro, @PathParam("idUsuario") Integer idUsuario, String content) {
+        controleEmprestimo.alugarLivro(idLivro, idUsuario, content);
+    }
+    
+    @POST
+    @Path("/devolver{idLivro}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void devolverLivro(@PathParam("idLivro") Integer idLivro) {
+        controleEmprestimo.devolverLivro(idLivro);
     }
 
-    @PUT
-    @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public String editarEmprestimoPeloId(@PathParam("id") int id, String content) {
-        controleEmprestimo.atualizarEmprestimo(id, content);
-        return content;
-    }
-
-    @DELETE
-    @Path("{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void deletarEmprestimo(@PathParam("id") int id) {
-        controleEmprestimo.deletarEmprestimo(id);
-    }
 }

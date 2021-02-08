@@ -6,6 +6,8 @@ import br.com.grupoVoid.modelo.Emprestimo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,24 +18,26 @@ public class ControleEmprestimo {
     private EmprestimoDao dao = new EmprestimoDao(ConnectionFactory.getConnection());
     private static final Gson GSON = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
     
-    public String pegarLista() throws SQLException {
-        return GSON.toJson(dao.buscarTodos());
+    public String listarEmprestimos() {
+        String list ="";
+        try {
+            list = GSON.toJson(dao.listarEmprestimos());
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
-    public String pegarEmprestimo(int id) {
-        return GSON.toJson(dao.pegarEmprestimo(id));
+    public void alugarLivro(Integer idLivro, Integer idUsuario, String content) {
+        try {
+            dao.alugarLivro(idLivro, idUsuario, GSON.fromJson(content, Emprestimo.class));
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public void addNovoEmprestimo(String content) {
-        dao.adicionarNovo(GSON.fromJson(content, Emprestimo.class));
-    }
-
-    public void atualizarEmprestimo(int id, String content) {
-        dao.atualizarEmprestimo(id, GSON.fromJson(content, Emprestimo.class));
-    }
-
-    public void deletarEmprestimo(int id) {
-        dao.deletarLivro(id);
+    public void devolverLivro(Integer idLivro) {
+        dao.devolverLivro(idLivro);
     }
 
 }

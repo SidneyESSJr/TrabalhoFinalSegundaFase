@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.grupoVoid.dao;
 
 import br.com.grupoVoid.connection.ConnectionFactory;
@@ -16,7 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  *
  * @author ssjun
@@ -25,13 +19,40 @@ public class EmprestimoDao {
 
     private Connection conn = null;
 
-    /*------------------------------------------------------------*/
     public EmprestimoDao(Connection conn) {
         this.conn = conn;
     }
 
-    public List<Emprestimo> buscarTodos() throws SQLException {
+    public void alugarLivro(Integer idLivro, Integer idUsuario, Emprestimo emprestimo) throws SQLException {
 
+        PreparedStatement stm = null;
+
+        try {
+            stm = conn.prepareStatement("insert into emprestimo(id_usuario, "
+                    + "id_livro, data_inicio, data_entrega, multa, situacao) "
+                    + "values(?, ?, ?, ?, ?, ?)");
+
+            stm.setInt(1, idUsuario);
+            stm.setInt(2, idLivro);
+            stm.setDate(3, new Date(emprestimo.getDataInicio().getTime()));
+            stm.setDate(4, new Date(emprestimo.getDataEntrega().getTime()));
+            stm.setDouble(5, emprestimo.getMulta());
+            stm.setBoolean(6, true);
+            stm.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("erro salvar no banco " + e);
+
+        } finally {
+            ConnectionFactory.fecharConexao(conn, stm);
+        }
+    }
+
+    public void devolverLivro(Integer idLivro) {
+
+    }
+
+    public List<Emprestimo> listarEmprestimos() throws SQLException {
         List<Emprestimo> list = new ArrayList<>();
 
         PreparedStatement stm = null;
@@ -63,42 +84,4 @@ public class EmprestimoDao {
         return emprestimo;
     }
 
-    /*------------------------------------------------------------*/
-    public Object pegarEmprestimo(int id) {
-        return null;
-    }
-
-    /*------------------------------------------------------------*/
-    public Boolean adicionarNovo(Emprestimo emprestimo) {
-
-        PreparedStatement stm = null;
-
-        try {
-            stm = conn.prepareStatement("insert into emprestimo(id_usuario, "
-                    + "id_livro, data_inicio, data_entrega, multa, situacao) "
-                    + "values(?, ?, ?, ?, ?, ?)");
-            
-            stm.setInt(1, emprestimo.getUsuario());
-            stm.setInt(2, emprestimo.getLivro());
-            stm.setDate(3, new Date(emprestimo.getDataInicio().getTime()));
-            stm.setDate(4, new Date(emprestimo.getDataEntrega().getTime()));
-            stm.setDouble(5, emprestimo.getMulta());
-            stm.setBoolean(6, emprestimo.isSituacao());
-            stm.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            System.err.println("erro salvar no banco " + e);
-            return false;
-        }
-    }
-
-    /*------------------------------------------------------------*/
-    public void atualizarEmprestimo(int id, Emprestimo fromJson) {
-    }
-
-    /*------------------------------------------------------------*/
-    public void deletarLivro(int id) {
-    }
-
-    /*------------------------------------------------------------*/
 }
