@@ -8,9 +8,12 @@ package br.com.grupoVoid.dao;
 import br.com.grupoVoid.connection.ConnectionFactory;
 import br.com.grupoVoid.modelo.Emprestimo;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +26,6 @@ public class EmprestimoDao {
     private Connection con = null;
     private final UsuarioDao uDao = new UsuarioDao();
     private final LivroDao lDao = new LivroDao();
-
 
     /*------------------------------------------------------------*/
     public EmprestimoDao() {
@@ -45,14 +47,14 @@ public class EmprestimoDao {
                 Emprestimo emprestimo = new Emprestimo();
 
                 emprestimo.setId(rs.getInt("id"));
-                emprestimo.setDataInicio(rs.getDate("data_inicio").toLocalDate());
-                emprestimo.setDataEntrega(rs.getDate("data_entrega").toLocalDate());
+                emprestimo.setDataInicio(rs.getString("data_inicio"));
+                emprestimo.setDataEntrega(rs.getString("data_entrega"));
                 emprestimo.setMulta(rs.getDouble("multa"));
                 emprestimo.setSituacao(rs.getBoolean("situacao"));
                 int usuario = rs.getInt("usuario");
-                emprestimo.setUsuario(uDao.buscarUsuario(usuario));
+                emprestimo.setUsuario(uDao.buscarUsuario(usuario).getId());
                 int livro = rs.getInt("livro");
-                emprestimo.setLivro(lDao.pegarLivro(livro));
+                emprestimo.setLivro(lDao.pegarLivro(livro).getId());
             }
         } catch (SQLException e) {
             System.err.println("DEU PAU EM PEGAR DO BANCO." + e);
@@ -72,11 +74,13 @@ public class EmprestimoDao {
         String sql = "insert into emprestimo(id_usuario,id_livro,data_inicio,data_entrega,multa,situacao) values(?,?,?,?,?,?)";
 
         PreparedStatement stm = null;
+        
+        System.out.println(emprestimo.getUsuario());
 
         try {
             stm = con.prepareStatement(sql);
-            stm.setInt(1, emprestimo.getUsuario().getId());
-            stm.setInt(2, emprestimo.getLivro().getId());
+            stm.setInt(1, emprestimo.getUsuario());
+            stm.setInt(2, emprestimo.getLivro());
             stm.setDate(3, Date.valueOf(emprestimo.getDataInicio()));
             stm.setDate(4, Date.valueOf(emprestimo.getDataEntrega()));
             stm.setDouble(5, emprestimo.getMulta());

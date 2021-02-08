@@ -11,13 +11,13 @@ import java.util.Objects;
 public class Emprestimo {
 
     private Integer id;
-    private Usuario usuario;
-    private Livro livro;
+    private Integer usuario;
+    private Integer livro;
     private LocalDate dataInicio;
     private LocalDate dataEntrega;
     private double multa;
     private boolean situacao;
-    private static final DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public Integer getId() {
         return id;
@@ -27,28 +27,28 @@ public class Emprestimo {
         this.id = id;
     }
 
-    public Usuario getUsuario() {
+    public Integer getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
 
-    public String getDataInicio() {
-        return dataInicio.format(df);
+    public LocalDate getDataInicio() {
+        return dataInicio;
     }
 
-    public void setDataInicio(LocalDate dataInicio) {
-        this.dataInicio = dataInicio;
+    public void setDataInicio(String dataInicio) {
+        this.dataInicio = LocalDate.parse(dataInicio, dtf);
     }
 
-    public String getDataEntrega() {
-        return dataEntrega.format(df);
+    public LocalDate getDataEntrega() {
+        return dataEntrega;
     }
 
-    public void setDataEntrega(LocalDate dataEntrega) {
-        this.dataEntrega = dataEntrega.format(df);
+    public void setDataEntrega(String dataEntrega) {
+        this.dataEntrega = LocalDate.parse(dataEntrega, dtf);
     }
 
     public double getMulta() {
@@ -69,11 +69,11 @@ public class Emprestimo {
         this.situacao = situacao;
     }
 
-    public Livro getLivro() {
+    public Integer getLivro() {
         return livro;
     }
 
-    public void setLivro(Livro livro) {
+    public void setLivro(Integer livro) {
         this.livro = livro;
     }
 
@@ -96,10 +96,7 @@ public class Emprestimo {
             return false;
         }
         final Emprestimo other = (Emprestimo) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
 }
