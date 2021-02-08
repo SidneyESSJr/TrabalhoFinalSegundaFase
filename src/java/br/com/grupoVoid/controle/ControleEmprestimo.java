@@ -1,9 +1,10 @@
-
 package br.com.grupoVoid.controle;
 
+import br.com.grupoVoid.connection.ConnectionFactory;
 import br.com.grupoVoid.dao.EmprestimoDao;
 import br.com.grupoVoid.modelo.Emprestimo;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.sql.SQLException;
 
 /**
@@ -12,27 +13,27 @@ import java.sql.SQLException;
  */
 public class ControleEmprestimo {
     
-    private static final Gson GSON = new Gson();
-    private final static EmprestimoDao DAO = new EmprestimoDao();
-
-    public static String pegarLista() throws SQLException {
-        return GSON.toJson(DAO.buscarTodos());
-    }
-
-    public static String pegarEmprestimo(int id) {
-        return GSON.toJson(DAO.pegarEmprestimo(id));
-    }
-
-    public static void addNovoEmprestimo(String content) {
-        DAO.adicionarNovo(GSON.fromJson(content, Emprestimo.class));
-    }
-
-    public static void atualizarEmprestimo(int id, String content) {
-        DAO.atualizarEmprestimo(id, GSON.fromJson(content, Emprestimo.class));
-    }
-
-    public static void deletarEmprestimo(int id) {
-        DAO.deletarLivro(id);
-    }
+    private EmprestimoDao dao = new EmprestimoDao(ConnectionFactory.getConnection());
+    private static final Gson GSON = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
     
+    public String pegarLista() throws SQLException {
+        return GSON.toJson(dao.buscarTodos());
+    }
+
+    public String pegarEmprestimo(int id) {
+        return GSON.toJson(dao.pegarEmprestimo(id));
+    }
+
+    public void addNovoEmprestimo(String content) {
+        dao.adicionarNovo(GSON.fromJson(content, Emprestimo.class));
+    }
+
+    public void atualizarEmprestimo(int id, String content) {
+        dao.atualizarEmprestimo(id, GSON.fromJson(content, Emprestimo.class));
+    }
+
+    public void deletarEmprestimo(int id) {
+        dao.deletarLivro(id);
+    }
+
 }

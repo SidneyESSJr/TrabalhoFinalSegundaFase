@@ -17,14 +17,14 @@ public class UsuarioDaoTest {
 
     @Test
     public void testSomeMethod() throws SQLException {
-        Usuario user = new Usuario("maryucha", "8754212", 15, "barreiros", "8787878", true);
-        UsuarioDao dao = new UsuarioDao();
-
-        if (dao.salvar(user)) {
-            System.out.println("Salvo com sucesso!");
-        } else {
-            fail("erro ao salvar!");
-        }
+//        Usuario user = new Usuario("maryucha", "8754212", 15, "barreiros", "8787878", true);
+//        UsuarioDao dao = new UsuarioDao();
+//
+//        if (dao.salvar(user)) {
+//            System.out.println("Salvo com sucesso!");
+//        } else {
+//            fail("erro ao salvar!");
+//        }
     }
 
 }

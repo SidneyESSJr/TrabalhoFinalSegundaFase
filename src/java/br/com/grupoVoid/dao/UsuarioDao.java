@@ -15,11 +15,12 @@ import java.util.List;
  */
 public class UsuarioDao {
 
-    private final Connection con = ConnectionFactory.getConnection();
+    private final Connection conn;
 
     /*------------------------------------------------------------*/
-    public UsuarioDao(){
-        
+
+    public UsuarioDao(Connection conn) {
+        this.conn = conn;
     }
 
     /*------------------------------------------------------------*/
@@ -28,7 +29,7 @@ public class UsuarioDao {
         String sql = "insert into usuario (nome,cpf,idade,endereco,telefone,ativo) values(?,?,?,?,?,?)";
         PreparedStatement stm = null;
         try {
-            stm = con.prepareStatement(sql);
+            stm = conn.prepareStatement(sql);
             stm.setString(1, usuario.getNome());
             stm.setString(2, usuario.getCpf());
             stm.setInt(3, usuario.getIdade());
@@ -41,7 +42,7 @@ public class UsuarioDao {
             System.err.println("erro salvar no banco " + e);
             return false;
         } finally {
-            ConnectionFactory.fecharConexao(con, stm);
+            ConnectionFactory.fecharConexao(conn, stm);
         }
     }
 
@@ -54,7 +55,7 @@ public class UsuarioDao {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            stm = con.prepareStatement(sql);
+            stm = conn.prepareStatement(sql);
             rs = stm.executeQuery();
 
             while (rs.next()) {
@@ -71,7 +72,7 @@ public class UsuarioDao {
         } catch (SQLException e) {
             System.err.println("DEU PAU EM PEGAR DO BANCO." + e);
         } finally {
-            ConnectionFactory.fecharConexao(con, stm, rs);
+            ConnectionFactory.fecharConexao(conn, stm, rs);
         }
         return listaUsuarios;
     }
@@ -83,7 +84,7 @@ public class UsuarioDao {
         PreparedStatement stm = null;
 
         try {
-            stm = con.prepareStatement(sql);
+            stm = conn.prepareStatement(sql);
 
             stm.setString(1, user.getNome());
             stm.setString(2, user.getCpf());
@@ -97,7 +98,7 @@ public class UsuarioDao {
         } catch (SQLException e) {
             System.err.println("DEU PAU EM PEGAR DO BANCO." + e);
         } finally {
-            ConnectionFactory.fecharConexao(con, stm);
+            ConnectionFactory.fecharConexao(conn, stm);
         }
     }
 
@@ -109,7 +110,7 @@ public class UsuarioDao {
         Usuario user = new Usuario();
 
         try {
-            stm = con.prepareStatement(sql);
+            stm = conn.prepareStatement(sql);
             stm.setInt(1, id);
             rs = stm.executeQuery();
 
@@ -123,9 +124,9 @@ public class UsuarioDao {
                 user.setAtivo(rs.getBoolean("ativo"));
             }
         } catch (SQLException e) {
-            System.err.println("DEU PAU EM PEGAR DO BANCO." + e);
+            System.err.println("DEU PAU EM PEGAR USUARIO DO BANCO." + e);
         } finally {
-            ConnectionFactory.fecharConexao(con, stm, rs);
+            ConnectionFactory.fecharConexao(conn, stm, rs);
         }
         return user;
     }
@@ -137,7 +138,7 @@ public class UsuarioDao {
         PreparedStatement stm = null;
         
         try {
-            stm = con.prepareStatement(sql);
+            stm = conn.prepareStatement(sql);
             stm.setInt(1, id);
 
             stm.executeUpdate();
@@ -145,7 +146,7 @@ public class UsuarioDao {
         } catch (SQLException e) {
             System.err.println("Deu erro em excluir do banco." + e);
         } finally {
-            ConnectionFactory.fecharConexao(con, stm);
+            ConnectionFactory.fecharConexao(conn, stm);
         }
     }
 }

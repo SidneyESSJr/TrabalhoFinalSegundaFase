@@ -1,8 +1,11 @@
 package br.com.grupoVoid.modelo;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,11 +16,11 @@ public class Emprestimo {
     private Integer id;
     private Integer usuario;
     private Integer livro;
-    private LocalDate dataInicio;
-    private LocalDate dataEntrega;
+    private Date dataInicio;
+    private Date dataEntrega;
     private double multa;
     private boolean situacao;
-    private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     public Integer getId() {
         return id;
@@ -35,20 +38,28 @@ public class Emprestimo {
         this.usuario = usuario;
     }
 
-    public LocalDate getDataInicio() {
+    public Date getDataInicio() {
         return dataInicio;
     }
 
     public void setDataInicio(String dataInicio) {
-        this.dataInicio = LocalDate.parse(dataInicio, dtf);
+        try {
+            this.dataInicio = sdf.parse(dataInicio);
+        } catch (ParseException ex) {
+            Logger.getLogger(Emprestimo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public LocalDate getDataEntrega() {
+    public Date getDataEntrega() {
         return dataEntrega;
     }
 
     public void setDataEntrega(String dataEntrega) {
-        this.dataEntrega = LocalDate.parse(dataEntrega, dtf);
+        try {
+            this.dataEntrega = sdf.parse(dataEntrega);
+        } catch (ParseException ex) {
+            Logger.getLogger(Emprestimo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public double getMulta() {

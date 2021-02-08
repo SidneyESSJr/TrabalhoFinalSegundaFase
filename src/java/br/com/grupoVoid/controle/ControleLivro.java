@@ -1,5 +1,6 @@
 package br.com.grupoVoid.controle;
 
+import br.com.grupoVoid.connection.ConnectionFactory;
 import br.com.grupoVoid.dao.LivroDao;
 import br.com.grupoVoid.modelo.Livro;
 import com.google.gson.Gson;
@@ -12,7 +13,7 @@ import java.sql.SQLException;
 public class ControleLivro {
 
     private static final Gson GSON = new Gson();
-    private final LivroDao DAO = new LivroDao();
+    private LivroDao DAO = new LivroDao(ConnectionFactory.getConnection());
 
     public  void addNovoLivro(String body) throws SQLException {
         Livro livro = GSON.fromJson(body, Livro.class);

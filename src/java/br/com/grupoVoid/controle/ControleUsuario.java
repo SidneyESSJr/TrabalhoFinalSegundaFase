@@ -1,5 +1,6 @@
 package br.com.grupoVoid.controle;
 
+import br.com.grupoVoid.connection.ConnectionFactory;
 import br.com.grupoVoid.dao.UsuarioDao;
 import br.com.grupoVoid.modelo.Usuario;
 import com.google.gson.Gson;
@@ -11,41 +12,35 @@ import java.sql.SQLException;
  */
 public class ControleUsuario {
 
-    static final Gson GSON = new Gson();
-    static final UsuarioDao DAO = new UsuarioDao();
+    private static final Gson GSON = new Gson();
+    private final UsuarioDao dao = new UsuarioDao(ConnectionFactory.getConnection());
 
     /*----------------------------------------------*/
-    static public String pegarLista() throws SQLException {
-
-        return GSON.toJson(DAO.buscarTodos());
+    public String pegarLista() throws SQLException {
+        return GSON.toJson(dao.buscarTodos());
     }
 
     /*----------------------------------------------*/
-    static public void addNovoUsuario(String body) throws SQLException {
+    public void addNovoUsuario(String body) throws SQLException {
         Usuario user = GSON.fromJson(body, Usuario.class);
-
-        DAO.salvar(user);
+        dao.salvar(user);
     }
 
     /*----------------------------------------------*/
-    static public String pegarUsuario(int id) throws SQLException {
-
-        Usuario user = DAO.buscarUsuario(id);
-
+    public String pegarUsuario(int id) throws SQLException {
+        Usuario user = dao.buscarUsuario(id);
         return GSON.toJson(user);
     }
 
     /*----------------------------------------------*/
-    static public void atualizarUsuario(int id, String body) throws SQLException {
+    public void atualizarUsuario(int id, String body) throws SQLException {
         pegarUsuario(id);
         Usuario user = GSON.fromJson(body, Usuario.class);
-
-        DAO.atualizarUsuario(id, user);
+        dao.atualizarUsuario(id, user);
     }
 
     /*----------------------------------------------*/
-    static public void deletarUsuario(int id) throws SQLException {
-
-        DAO.deletarUsuario(id);
+    public void deletarUsuario(int id) throws SQLException {
+        dao.deletarUsuario(id);
     }
 }

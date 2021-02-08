@@ -21,12 +21,10 @@ import javax.ws.rs.core.UriInfo;
 @Path("/livro")
 public class ServicoLivro {
 
-    private ControleLivro controleLivro = new ControleLivro();
-    
     @Context
     private UriInfo context;
-    
-    
+
+    private ControleLivro controleLivro = new ControleLivro();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
