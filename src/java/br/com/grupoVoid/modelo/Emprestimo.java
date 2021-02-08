@@ -12,7 +12,6 @@ public class Emprestimo {
 
     private Integer id;
     private Usuario usuario;
-    private Livro livro;
     private LocalDate dataInicio;
     private LocalDate dataEntrega;
     private double multa;
@@ -67,14 +66,6 @@ public class Emprestimo {
     public void setSituacao(Boolean situacao) {
 
         this.situacao = situacao;
-    }
-
-    public Livro getLivro() {
-        return livro;
-    }
-
-    public void setLivro(Livro livro) {
-        this.livro = livro;
     }
 
     @Override

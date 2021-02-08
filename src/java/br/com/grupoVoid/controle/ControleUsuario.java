@@ -23,7 +23,6 @@ public class ControleUsuario {
     /*----------------------------------------------*/
     static public void addNovoUsuario(String body) throws SQLException {
         Usuario user = GSON.fromJson(body, Usuario.class);
-
         DAO.salvar(user);
     }
 

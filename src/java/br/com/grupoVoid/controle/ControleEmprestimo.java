@@ -5,6 +5,8 @@ import br.com.grupoVoid.dao.EmprestimoDao;
 import br.com.grupoVoid.modelo.Emprestimo;
 import com.google.gson.Gson;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -14,6 +16,10 @@ public class ControleEmprestimo {
     
     private static final Gson GSON = new Gson();
     private final static EmprestimoDao DAO = new EmprestimoDao();
+      static SimpleDateFormat formata = new SimpleDateFormat("dd/MM/yyyy"); 
+      
+//     Date dataFormatada = formata.parse(dataEntrada);       
+//     filmeNovo.setDataLancamento(ConversorData.converterUtilToSql(dataFormatada));
 
     public static String pegarLista() throws SQLException {
         return GSON.toJson(DAO.buscarTodos());
