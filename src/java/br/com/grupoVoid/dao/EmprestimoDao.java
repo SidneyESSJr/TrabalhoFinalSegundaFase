@@ -2,12 +2,11 @@ package br.com.grupoVoid.dao;
 
 import br.com.grupoVoid.connection.ConnectionFactory;
 import br.com.grupoVoid.modelo.Emprestimo;
+import br.com.grupoVoid.util.ConversorData;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +18,8 @@ public class EmprestimoDao {
 
     private Connection conn = null;
 
-    public EmprestimoDao(Connection conn) {
-        this.conn = conn;
+    public EmprestimoDao() {
+        conn = ConnectionFactory.getConnection();
     }
 
     public void alugarLivro(Integer idLivro, Integer idUsuario, Emprestimo emprestimo) throws SQLException {
@@ -34,8 +33,8 @@ public class EmprestimoDao {
 
             stm.setInt(1, idUsuario);
             stm.setInt(2, idLivro);
-            stm.setDate(3, new Date(emprestimo.getDataInicio().getTime()));
-            stm.setDate(4, new Date(emprestimo.getDataEntrega().getTime()));
+            stm.setDate(3,ConversorData.converterUtilToSql(emprestimo.getDataInicio()));
+            stm.setDate(4, ConversorData.converterUtilToSql(emprestimo.getDataEntrega()));
             stm.setDouble(5, emprestimo.getMulta());
             stm.setBoolean(6, true);
             stm.executeUpdate();
@@ -50,16 +49,16 @@ public class EmprestimoDao {
 
     public void devolverLivro(Emprestimo emprestimo) throws SQLException {
         PreparedStatement stm = null;
-
+        System.out.println(emprestimo);
         try {
             stm = conn.prepareStatement("UPDATE emprestimo set id_usuario=?, id_livro=?, data_inicio=?, data_entrega=?, multa=?, situacao=? where id = ?");
 
             stm.setInt(1, emprestimo.getUsuario());
             stm.setInt(2, emprestimo.getLivro());
-            stm.setDate(3, new Date(emprestimo.getDataInicio().getTime()));
-            stm.setDate(4, new Date(emprestimo.getDataEntrega().getTime()));
+            stm.setDate(3,ConversorData.converterUtilToSql(emprestimo.getDataInicio()));
+            stm.setDate(4, ConversorData.converterUtilToSql(emprestimo.getDataEntrega()));
             stm.setDouble(5, emprestimo.getMulta());
-            stm.setBoolean(6, false);
+            stm.setBoolean(6,false);
             stm.setInt(7, emprestimo.getId());
             stm.executeUpdate();
 
@@ -69,7 +68,6 @@ public class EmprestimoDao {
         } finally {
             ConnectionFactory.fecharConexao(conn, stm);
         }
->>>>>>> 94d5ddcca71e06b24214b61e289590afc6da56d8
     }
 
     public List<Emprestimo> listarEmprestimos() throws SQLException {
@@ -85,7 +83,7 @@ public class EmprestimoDao {
                 list.add(instanciarEmprestimo(rs));
             }
         } catch (SQLException e) {
-            System.err.println("DEU PAU EM PEGAR EMPRESTIMO DO BANCO." + e);
+            System.err.println("Erro em buscar os dados do banco." + e);
         } finally {
             ConnectionFactory.fecharConexao(conn, stm, rs);
         }
@@ -108,7 +106,7 @@ public class EmprestimoDao {
         String sql = "select * from emprestimo where id = ?";
         PreparedStatement stm = null;
         ResultSet rs = null;
-
+        System.out.println(id);
         try {
             stm = conn.prepareStatement(sql);
             stm.setInt(1, id);
@@ -122,9 +120,10 @@ public class EmprestimoDao {
                 emprestimoBuscado.setDataInicio(rs.getString("data_entrega"));
                 emprestimoBuscado.setMulta(rs.getDouble("multa"));
                 emprestimoBuscado.setSituacao(rs.getBoolean("situacao"));
+                System.out.println(emprestimoBuscado);
                 return emprestimoBuscado;
             }
-
+            
         } catch (SQLException e) {
             System.err.println("Erro em atualizar o banco." + e);
         } finally {

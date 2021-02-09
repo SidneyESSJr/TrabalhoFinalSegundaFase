@@ -41,7 +41,7 @@ public class ServicoEmprestimo {
     }
     
     @PUT
-    @Path("/devolver{idEmprestimo}")
+    @Path("/devolver/{idEmprestimo}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void devolverLivro(@PathParam("idEmprestimo") Integer idEmprestimo) throws SQLException {
         controleEmprestimo.devolverLivro(idEmprestimo);

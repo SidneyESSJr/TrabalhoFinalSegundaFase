@@ -9,9 +9,6 @@ import java.text.SimpleDateFormat;
 
 public class ConversorData {
 
-    /**
-     * java.util.date to java.sql.date
-     */
     public static void conversorDeData() {
         java.util.Date uDate = new java.util.Date();
         DateFormat df = new SimpleDateFormat("dd/MM/YYYY - hh:mm:ss");
