@@ -19,6 +19,7 @@ public class ControleEmprestimo {
     private static final Gson GSON = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
 
     public String listarEmprestimos() {
+
         String list = "";
         try {
             list = GSON.toJson(dao.listarEmprestimos());
@@ -43,5 +44,4 @@ public class ControleEmprestimo {
             Logger.getLogger(ControleEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }

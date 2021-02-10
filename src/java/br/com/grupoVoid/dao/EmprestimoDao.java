@@ -2,14 +2,15 @@ package br.com.grupoVoid.dao;
 
 import br.com.grupoVoid.connection.ConnectionFactory;
 import br.com.grupoVoid.modelo.Emprestimo;
+import br.com.grupoVoid.util.ConversorData;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,8 +36,8 @@ public class EmprestimoDao {
 
             stm.setInt(1, idUsuario);
             stm.setInt(2, idLivro);
-            stm.setDate(3, new Date(emprestimo.getDataInicio().getTime()));
-            stm.setDate(4, new Date(emprestimo.getDataEntrega().getTime()));
+            stm.setDate(3, ConversorData.converterUtilToSql(emprestimo.getDataInicio()));
+            stm.setDate(4, ConversorData.converterUtilToSql(emprestimo.getDataEntrega()));
             stm.setDouble(5, emprestimo.getMulta());
             stm.setBoolean(6, true);
             stm.executeUpdate();
@@ -79,11 +80,11 @@ public class EmprestimoDao {
                 emprestimo.setDataEntrega(rs.getString("data_entrega"));
                 emprestimo.setMulta(rs.getDouble("multa"));
                 emprestimo.setSituacao(rs.getBoolean("situacao"));
-                
+
                 updateEmprestimo.setInt(1, emprestimo.getUsuario());
                 updateEmprestimo.setInt(2, emprestimo.getLivro());
-                updateEmprestimo.setDate(3, new Date(emprestimo.getDataInicio().getTime()));
-                updateEmprestimo.setDate(4, new Date(emprestimo.getDataEntrega().getTime()));
+                updateEmprestimo.setDate(3, ConversorData.converterUtilToSql(emprestimo.getDataInicio()));
+                updateEmprestimo.setDate(4, ConversorData.converterUtilToSql(emprestimo.getDataEntrega()));
                 updateEmprestimo.setDouble(5, emprestimo.getMulta());
                 updateEmprestimo.setBoolean(6, false);
                 updateEmprestimo.setInt(7, emprestimo.getId());
@@ -95,13 +96,7 @@ public class EmprestimoDao {
             } else {
                 System.out.println("Não foi possivel encontrar o emprestimo de id " + idEmprestimo);
             }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            conn.setAutoCommit(true);
         }
-
     }
 
     public List<Emprestimo> listarEmprestimos() throws SQLException {
@@ -117,7 +112,7 @@ public class EmprestimoDao {
                 list.add(instanciarEmprestimo(rs));
             }
         } catch (SQLException e) {
-            System.err.println("DEU PAU EM PEGAR EMPRESTIMO DO BANCO." + e);
+            System.err.println("Erro em buscar os dados do banco." + e);
         } finally {
             ConnectionFactory.fecharConexao(conn, stm, rs);
         }
@@ -134,6 +129,6 @@ public class EmprestimoDao {
         emprestimo.setUsuario(rs.getInt("id_usuario"));
         emprestimo.setLivro(rs.getInt("id_livro"));
         return emprestimo;
-    }
 
+    }
 }
