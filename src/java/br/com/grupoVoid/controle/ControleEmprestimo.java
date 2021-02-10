@@ -14,12 +14,12 @@ import java.util.logging.Logger;
  * @author ssjun
  */
 public class ControleEmprestimo {
-    
-    private EmprestimoDao dao = new EmprestimoDao(ConnectionFactory.getConnection());
+
+    private final EmprestimoDao dao = new EmprestimoDao(ConnectionFactory.getConnection());
     private static final Gson GSON = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
-    
+
     public String listarEmprestimos() {
-        String list ="";
+        String list = "";
         try {
             list = GSON.toJson(dao.listarEmprestimos());
         } catch (SQLException ex) {
@@ -36,14 +36,12 @@ public class ControleEmprestimo {
         }
     }
 
-    public void devolverLivro(Integer idEmprestimo) throws SQLException {
-        Emprestimo emprestimo = buscarPeoloId(idEmprestimo);
-        dao.devolverLivro(emprestimo);
-    }
-    
-    public Emprestimo buscarPeoloId(Integer id) throws SQLException{
-        
-        return dao.buscarPeloId(id);
+    public void devolverLivro(Integer idEmprestimo) {
+        try {
+            dao.devolverLivro(idEmprestimo);
+        } catch (SQLException ex) {
+            Logger.getLogger(ControleEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

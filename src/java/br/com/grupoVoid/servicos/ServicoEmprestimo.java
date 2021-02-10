@@ -1,6 +1,7 @@
 package br.com.grupoVoid.servicos;
 
 import br.com.grupoVoid.controle.ControleEmprestimo;
+import br.com.grupoVoid.modelo.Emprestimo;
 import java.sql.SQLException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -41,12 +42,10 @@ public class ServicoEmprestimo {
     }
     
     @PUT
-    @Path("/devolver{idEmprestimo}")
+    @Path("/devolver/{idEmprestimo}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void devolverLivro(@PathParam("idEmprestimo") Integer idEmprestimo) throws SQLException {
         controleEmprestimo.devolverLivro(idEmprestimo);
     }
-    
-    
-
+ 
 }

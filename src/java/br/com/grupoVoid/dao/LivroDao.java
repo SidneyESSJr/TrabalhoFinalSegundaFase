@@ -39,6 +39,7 @@ public class LivroDao {
             stm.setBoolean(7, livro.isDisponibilidade());
             stm.executeUpdate();
             return true;
+            
         } catch (SQLException e) {
             System.err.println("erro salvar no banco " + e);
             return false;
